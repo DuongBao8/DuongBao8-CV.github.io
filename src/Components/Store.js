@@ -1,16 +1,19 @@
-import {noteData} from './FirebaseConnect'
+import {noteData} from './FirebaseConnect';
+import {cartData} from './FirebaseConnect';
+import {signupData} from './FirebaseConnect';
 
 var redux = require('redux');
 const  noteInitialState = {
     isEdit:false,
     isEdits:false,
     getItem:'',
-    productNumber1:''
+    deleteDataCart:''
 }
 const allReducers = (state =  noteInitialState, action) => {
     switch (action.type) {
         case "ADD_DATA":            
             noteData.push(action.getItem)
+            signupData.push(action.getItem)
             console.log('them du lieu ' + JSON.stringify(action.getItem) + 'thanh cong');
             return state
         case "CHANGE_EDIT_STATUS":
@@ -19,8 +22,9 @@ const allReducers = (state =  noteInitialState, action) => {
             return {...state,isEdits:!state.isEdits}
         case "GET_DATA":
             return {...state,getItem:action.getData}
-        case "CART_PRODUCT":
-             return {...state,productNumber1:action.cartProduct}       
+        case "DELETE_CART_DATA":
+            cartData.child(action.deleteCart).remove();
+                return {...state,deleteDataCart:action.deleteCart}    
          default:
             return state
     }

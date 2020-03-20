@@ -1,26 +1,54 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import {cartData} from  '../../FirebaseConnect';
 import MenuTwoViewCard from './MenuTwoViewCard';
+import MenuTwoNoProduct from './MenuTowNoProduct'
 
 class MenuTwo extends Component {
     constructor(props) {
         super(props);
         this.state={
-           tempValue:''
+           tempValue:'',
+           datafirebase:[]
         }
     }
+    componentWillMount() {
+      cartData.on('value',(notes) => {
+          var arrayData = [];
+             notes.forEach(element => {
+             const key=element.key;
+             const product_name=element.val().product_name;
+             const product_price=element.val().product_price;
+             const image=element.val().image;
+              arrayData.push({
+                  id:key,                    
+                  product_name:product_name,
+                  product_price:product_price,
+                  image:image
+              });
+          });
+            this.setState({
+                datafirebase:arrayData
+            });
+          })
+     }      
+   cartStatusData = () => {
+     if(this.state.datafirebase){
+        return(<MenuTwoViewCard/>) 
+     }
+     else{
+        return(<MenuTwoNoProduct/>)
+     }
+   }    
     isChange = (event) => {
-            const name=event.target.name;
-            const value=event.target.value;
             this.setState({
                 tempValue:event.target.value
             });   
             this.props.getEditData(this.state.tempValue);
-        }
-    
+        }    
     render() { 
-        //console.log(this.state.tempValue)              
-        console.log(this.props.stateCart.i);
+        //console.log(this.state.tempValue)
+        console.log(this.state.datafirebase + "đây là dữ liệu giõ hàng");              
         return (
                     <div className="header-with-search">
                     <label htmlFor="mobile-search-checkbox" className="header__mobile-search">
@@ -76,23 +104,21 @@ class MenuTwo extends Component {
                     <div className="header__cart">
                         <div className="header__cart-wrap">
                         <i className="header_cart-icon fas fa-shopping-cart" />
-                        <span className="header__cart-notice">3</span>
+                        <span className="header__cart-notice">{this.state.datafirebase.length}</span>
                         {/* No card: header__cart-list--no-cart */}
-                         <MenuTwoViewCard/>
+                        <div className="header__cart-list header_car-list--no-cart">
+                          {
+                            this.cartStatusData()
+                          }
+                         </div>
                       </div>                 
                 </div>
            </div>
         );
     }
 }
-// const mapStateToProps = (state, ownProps) => {
-//     return {
-//         stateCart1:state.productNumber1,
-//     }
-// }
 const mapStateToProps = (state, ownProps) => {
   return {
-    stateCart1: state.productNumber1
   }
 }
 
@@ -103,13 +129,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 type:"GET_DATA",
                 getData                       
             })
-        },
-      //   getEditData: (cartProduct) => {
-      //     dispatch({
-      //         type:"CART_PRODUCT",
-      //         cartProduct                       
-      //     })
-      // },
+        }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MenuTwo);

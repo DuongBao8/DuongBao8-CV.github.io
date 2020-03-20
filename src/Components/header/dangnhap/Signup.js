@@ -24,7 +24,6 @@ class Signup extends Component {
     item.product_name=name;
     item.product_price=price;
     item.image=image;
-
     this.props.addDataStore(item);
   }
     render() { 

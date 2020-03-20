@@ -2,18 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 
 class MenuTwoViewCardOne extends Component {
-    constructor(props) {
-        super(props);
-       this.state = {
-           numberProduct3:[]
-       }   
-    }
-    componentWillMount() {
-     var a=this.props.i;
-     this.setState({
-        numberProduct:a
-      });
-      this.props.numberProduct2(this.state.numberProduct3)
+    deleteData = () => {
+          this.props.deleteCartData(this.props.i.id)
     }
     render() {
         return (
@@ -32,7 +22,7 @@ class MenuTwoViewCardOne extends Component {
                         <span className="header__cart-item-description">
                         Phân loại :Bạc
                         </span>
-                        <span className="header__cart-item-remove">xóa</span>
+                        <span className="header__cart-item-remove" onClick={() => this.deleteData()}>xóa</span>
                     </div>
                 </div>
                 </li>
@@ -41,16 +31,14 @@ class MenuTwoViewCardOne extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
     return {
-        
     }
 }
-
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        numberProduct2: (cartProduct) => {
+        deleteCartData: (deleteCart) => {
             dispatch({
-                type:"CART_PRODUCT",
-                cartProduct
+                type:"DELETE_CART_DATA",
+                deleteCart
             })
         }
     }

@@ -6,7 +6,7 @@ class MenuTwoViewCard extends Component {
     constructor(props) {
         super(props);
         this.state ={
-            datafirebase:[]
+            datafirebase:[],
         }
     }    
     componentWillMount() {
@@ -35,17 +35,17 @@ class MenuTwoViewCard extends Component {
                     return(
                         <MenuTwoViewCardOne
                         key={key}
-                        i={key}
+                        i={value}
                         productname={value.product_name}
                         productprice={value.product_price}
                         image={value.image}
                         />
                     )
                 })       
-            } 
+            };
     render() {
         return (
-            <div className="header__cart-list header_car-list--no-cart">
+            <div>
             <h4 className="header__cart-heading">Sản phẩm đã thêm</h4>
             <ul className="header__cart-list-item">
             {
@@ -53,9 +53,8 @@ class MenuTwoViewCard extends Component {
             }
             </ul>
             <a className="header__cart-view-card btn btn--primary">Xem giỏ hàng </a>
-        </div>
+            </div>
         )
     }
 }
-
 export default MenuTwoViewCard;
