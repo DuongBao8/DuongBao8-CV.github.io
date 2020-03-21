@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 class MenuOne2 extends Component {
+    statusLogOut = (event) => {
+        event.preventDefault();
+        this.props.changeLogOutStatus()
+    }
     render() {
         return (
          <li className="header_navbar-item header_navbar-users headings">
@@ -17,12 +22,24 @@ class MenuOne2 extends Component {
                         <a href="/">Đơn mua</a>
                     </li>
                     <li className="header_navbar-user-item header_navbar-user-item--separate">
-                        <a href="/">Đămg xuất</a>
+                        <a href="/" onClick={(event) => this.statusLogOut(event)}>Đămg xuất</a>
                     </li>
                 </ul>
          </li> 
         );
     }
 }
-
-export default MenuOne2;
+const mapStateToProps = (state, ownProps) => {
+    return {
+    }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        changeLogOutStatus: () => {
+            dispatch({
+                type:"CHANGE_LOGOUT_STATUS"
+            })
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MenuOne2)

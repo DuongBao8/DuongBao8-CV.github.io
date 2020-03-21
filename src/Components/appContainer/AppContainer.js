@@ -42,6 +42,7 @@ class AppContainer extends Component {
             ketqua.push(items);
             } 
         });
+        console.log('phần tìm kiếm:' + ' ' + ketqua);
         return (
         <div className="app__container">
           <div className="grid wide">

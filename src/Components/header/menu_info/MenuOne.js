@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Signup from '../dangnhap/Signup';
 import Login from '../dangnhap/Login'
+import MenuOne2 from '../menu_search/MenuOne2';
 
 class MenuOne extends Component {    
     showSignup = () => {
@@ -14,6 +15,29 @@ class MenuOne extends Component {
               return <Login/>
          }
      }
+     showUser = () => {
+         if(this.props.isLogin){
+             return (
+             <MenuOne2/>
+             )
+         }else{
+             return(
+                 <div>
+                <li className="header_navbar-item header_navbar-item--bole header_navbar-item--position" 
+                onClick={() => 
+                   this.props.changeEditStatus()}
+                >
+                   Đăng ký</li>
+                <li className="header_navbar-item header_navbar-item--bole header_navbar-item--position" onClick={() => this.props.changeEditStaturs()}>
+                   Đăng Nhập</li>
+                   </div>
+             )}
+     }
+     logOut = () => {
+        if(this.props.isLogOut){
+            return(<Signup/>,<Login/>)   
+        }
+    }
     render() {
         return (
             <nav className="header_navbar hide-on-mobile-tablet">
@@ -82,29 +106,29 @@ class MenuOne extends Component {
                 <li className="header_navbar-item"><a className="header_navbar-item--link" href="/"><i className="header_navbar-icon far fa-question-circle" />Trợ giúp</a></li>                
                 <div>
                  {
+                   this.showUser()
+                 }
+                 {
                      this.showSignup()
                  }
                  {
                      this.showLogin()
                  }
-                 <li className="header_navbar-item header_navbar-item--bole header_navbar-item--position" 
-                 onClick={() => 
-                    this.props.changeEditStatus()}
-                 >
-                    Đăng ký</li>
-                 <li className="header_navbar-item header_navbar-item--bole header_navbar-item--position" onClick={() => this.props.changeEditStaturs()}>
-                    Đăng Nhập</li>
+                 {
+                     this.logOut()
+                 }
                 </div>
             </ul>
             </nav>
         );
     }
 }
-
 const mapStateToProps = (state, ownProps) => {
     return {
         isEdit: state.isEdit,
-        isEdits: state.isEdits
+        isEdits: state.isEdits,
+        isLogin: state.isLogin,
+        isLogOut: state.isLogOut
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -117,6 +141,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         changeEditStaturs: () => {
             dispatch({
                 type:"CHANGE_EDIT_STATURS"
+            })
+        },
+        changeLoginStatus: () => {
+            dispatch({
+              type:"CHANGE_LOGIN_STATUS"
+            })
+          },
+          changeLogOutStatus: () => {
+            dispatch({
+                type:"CHANGE_LOGOUT_STATUS"
             })
         }
     }

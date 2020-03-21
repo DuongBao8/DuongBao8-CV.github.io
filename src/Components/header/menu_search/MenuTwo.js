@@ -48,7 +48,7 @@ class MenuTwo extends Component {
         }    
     render() { 
         //console.log(this.state.tempValue)
-        console.log(this.state.datafirebase + "đây là dữ liệu giõ hàng");              
+        // console.log(this.state.datafirebase + "đây là dữ liệu giõ hàng");              
         return (
                     <div className="header-with-search">
                     <label htmlFor="mobile-search-checkbox" className="header__mobile-search">

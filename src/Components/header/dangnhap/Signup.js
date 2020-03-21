@@ -36,17 +36,17 @@ class Signup extends Component {
                 <div className="auth_form-contarner">
                   <div className="authe_form-header">
                     <h3 className="authe_form-deading">Đăng ký</h3>
-                    <span className="authe_form-switch--btn">Đăng nhập</span>
+                    <span className="authe_form-switch--btn" onClick={() => this.props.changeEditStatus(this.props.changeEditStaturs())}>Đăng nhập</span>
                   </div>
                   <div className="auth_form-form">
                     <div className="auth_form-group">
-                      <input name="product_name" onChange={(event) => this.isChange(event)} type="text" className="auth_form-input" placeholder="Nhập gmail của bạn" />
+                      <input type="text" name="product_name" onChange={(event) => this.isChange(event)}  className="auth_form-input" placeholder="Nhập gmail của bạn" />
                     </div>
                     <div className="auth_form-group">
-                      <input name="product_price" onChange={(event) => this.isChange(event)} type="text" className="auth_form-input" placeholder="mật khẩu của bạn" />
+                      <input type="password" name="product_price" onChange={(event) => this.isChange(event)}  className="auth_form-input" placeholder="mật khẩu của bạn" />
                     </div>
                     <div className="auth_form-group">
-                      <input  name="image" onChange={(event) => this.isChange(event)} type="text" className="auth_form-input" placeholder="Nhập lại mật khẩu của bạn" />
+                      <input type="password" name="image" onChange={(event) => this.isChange(event)}  className="auth_form-input" placeholder="Nhập lại mật khẩu của bạn" />
                     </div>
                     <div className="auth_form-aside">
                       <p className="auth_form-policy--text">
@@ -56,7 +56,7 @@ class Signup extends Component {
                       </p>
                     </div>
                     <div className="auth_form-controls">
-                      <button className="btn btn--normal auth_form-controls-back">TRỞ LẠI</button> 
+                      <button className="btn btn--normal auth_form-controls-back" onClick={() => this.props.changeEditStatus()}>TRỞ LẠI</button> 
                       <button type="reset" onClick={() =>this.handleClick(this.state.product_name,this.state.product_price,this.state.image) } className="btn btn--primary">ĐĂNG KÝ</button>                                  
                     </div> 
                   </div>
@@ -83,7 +83,7 @@ class Signup extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    testThoi: state.testConnect
+    testThoi: state.testConnect,
   }
 }
 //this.props.testThoi
@@ -93,6 +93,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch({
         type:"ADD_DATA",
         getItem
+      })
+    },
+     changeEditStatus: () => {
+      dispatch({
+        type:"CHANGE_EDIT_STATUS"
+      })
+    },
+    changeEditStaturs: () => {
+      dispatch({
+        type:"CHANGE_EDIT_STATURS"
       })
     }
   }
